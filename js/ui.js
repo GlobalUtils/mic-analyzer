@@ -58,9 +58,12 @@
      * @returns {string} Formatted string (e.g., "-12.3 dBFS" or "--- dBFS").
      */
     const formatDBFS = (value) => {
-        if (!isFinite(value) || value <= -100) { // Use -100 as practical minimum display
+        // ADD THIS EXPLICIT CHECK AT THE BEGINNING:
+        if (value === null || typeof value === 'undefined' || !isFinite(value) || value <= -100) {
+            // If value is null, undefined, not finite, or too low, return default string
             return `--- ${i18n.t('units.dbfs') || 'dBFS'}`;
         }
+        // Only proceed to toFixed if value is a valid, finite number in range
         return `${value.toFixed(1)} ${i18n.t('units.dbfs') || 'dBFS'}`;
     };
 
