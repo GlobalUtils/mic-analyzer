@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags (Will be updated by i18n.js) -->
+    <title>Mic Test - Online Microphone Test & Playback | MicAnalyzer Pro</title>
+    <meta name="description" content="Free online mic test with playback. Instantly check your microphone quality, volume, and record audio. Works for headphones, AirPods, and any mic.">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Mic Test - Online Microphone Test & Playback | MicAnalyzer Pro">
+    <meta property="og:description" content="Instantly check your microphone quality with real-time analysis and audio playback.">
+    <meta property="og:image" content="assets/og-image.png"> <!-- Make sure this path is correct -->
+    <meta property="og:url" content="https://yourdomain.com/mic-analyzer/"> <!-- Replace with your actual URL -->
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+
+    <!-- Hreflang Tags (Essential for SEO - Add ALL supported languages here) -->
+    <!-- These should list the final deployment URLs -->
+    <link rel="alternate" hreflang="en" href="https://yourdomain.com/mic-analyzer/" />
+    <!-- <link rel="alternate" hreflang="es" href="https://yourdomain.com/mic-analyzer/es/" /> -->
+    <!-- <link rel="alternate" hreflang="fr" href="https://yourdomain.com/mic-analyzer/fr/" /> -->
+    <!-- Add other languages as needed -->
+    <link rel="alternate" hreflang="x-default" href="https://yourdomain.com/mic-analyzer/" />
+
+    <!-- Schema.org Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MicAnalyzer Pro - Online Mic Test",
+      "description": "Free online tool to test microphone quality, check volume levels, detect clipping, measure noise, and record audio snippets with playback.",
+      "url": "https://yourdomain.com/mic-analyzer/", // Replace with your actual URL
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any modern web browser",
+      "browserRequirements": "Requires Web Audio API and MediaRecorder API support.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      },
+      "screenshot": "assets/og-image.png" // Replace with your actual URL if hosted elsewhere
+      // Potential HowTo and FAQPage schema can be added here or linked
+    }
+    </script>
+
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Defer JS loading -->
+    <script src="js/i18n.js" defer></script>
+    <script src="js/analyzer.js" defer></script>
+    <script src="js/ui.js" defer></script>
+    <script src="js/app.js" defer></script>
+
+</head>
+<body>
+    <header class="main-header">
+        <h1 data-i18n="mainHeading">Online Mic Test & Recorder</h1>
+        <!-- Language Selector Placeholder -->
+        <div id="language-selector" class="language-selector">
+            <!-- Links will be added dynamically by i18n.js -->
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="controls-section card">
+            <h2 data-i18n="controlsTitle">Controls</h2>
+            <div class="button-group">
+                <button id="start-test-button" class="button button-primary" data-i18n="startButton">Start Test</button>
+                <button id="stop-test-button" class="button" data-i18n="stopButton" disabled>Stop Test</button>
+            </div>
+            <div class="button-group">
+                <button id="record-button" class="button" data-i18n="recordButton" disabled>Record Snippet (5s)</button>
+                <button id="play-button" class="button" data-i18n="playButton" disabled>Playback</button>
+            </div>
+            <div id="status-message" class="status-message" role="alert" aria-live="assertive">
+                <span data-i18n="statusIdle">Click "Start Test" to begin.</span>
+            </div>
+            <div id="mic-info" class="mic-info">
+                <span data-i18n="micLabel">Microphone:</span> <span id="mic-name" data-i18n="micNameDefault">Waiting for permission...</span>
+            </div>
+            <audio id="audio-playback" style="display: none;"></audio> <!-- Hidden audio element for playback -->
+        </section>
+
+        <section class="analysis-section card">
+            <h2 data-i18n="analysisTitle">Real-Time Analysis</h2>
+            <div class="visualization">
+                <h3 data-i18n="vizTitle">Live Audio</h3>
+                <canvas id="visualizer-canvas" width="600" height="150" aria-label="Real-time audio visualization"></canvas>
+                <!-- Add controls for viz type (Oscilloscope/Frequency) if implemented -->
+            </div>
+            <div class="metric-grid">
+                <!-- Metric cards will be populated here by JS or defined statically -->
+                <div class="metric-card" data-metric="peakVolume">
+                    <h3 data-i18n="metrics.peakVolume">Peak Volume</h3>
+                    <div class="value" aria-live="polite">-- dBFS</div>
+                    <meter min="-60" max="0" value="-60" low="-12" high="-3" optimum="-18"></meter>
+                    <button class="info-button" aria-label="Info about Peak Volume" data-metric-info="peakVolume">?</button>
+                </div>
+                <div class="metric-card" data-metric="rmsVolume">
+                    <h3 data-i18n="metrics.rmsVolume">RMS Volume</h3>
+                    <div class="value" aria-live="polite">-- dBFS</div>
+                    <meter min="-60" max="0" value="-60" low="-24" high="-12" optimum="-18"></meter>
+                     <button class="info-button" aria-label="Info about RMS Volume" data-metric-info="rmsVolume">?</button>
+                </div>
+                 <div class="metric-card" data-metric="clipping">
+                    <h3 data-i18n="metrics.clipping">Clipping</h3>
+                    <div class="value status" aria-live="polite" data-i18n="status.ok">OK</div>
+                     <button class="info-button" aria-label="Info about Clipping" data-metric-info="clipping">?</button>
+                </div>
+                 <div class="metric-card" data-metric="noiseLevel">
+                    <h3 data-i18n="metrics.noiseLevel">Noise Level</h3>
+                    <div class="value" aria-live="polite">-- dBFS</div>
+                     <button class="info-button" aria-label="Info about Noise Level" data-metric-info="noiseLevel">?</button>
+                </div>
+                <div class="metric-card" data-metric="sampleRate">
+                    <h3 data-i18n="metrics.sampleRate">Sample Rate</h3>
+                    <div class="value" aria-live="polite">-- Hz</div>
+                     <button class="info-button" aria-label="Info about Sample Rate" data-metric-info="sampleRate">?</button>
+                </div>
+                 <div class="metric-card" data-metric="channels">
+                    <h3 data-i18n="metrics.channels">Channels</h3>
+                    <div class="value" aria-live="polite">--</div>
+                     <button class="info-button" aria-label="Info about Channels" data-metric-info="channels">?</button>
+                </div>
+                <!-- Add other metrics like DC Offset if desired -->
+            </div>
+        </section>
+
+        <section id="tips-section" class="tips-section card" style="display: none;">
+             <h2 data-i18n="tipsTitle">Tips & Suggestions</h2>
+             <ul id="tips-list">
+                 <!-- Tips will be added dynamically by JS -->
+             </ul>
+        </section>
+
+        <!-- Modal or Section for Metric Explanations -->
+        <div id="explanation-modal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="explanation-title">
+            <div class="modal-content">
+                <button id="close-modal-button" class="close-button" aria-label="Close explanation">×</button>
+                <h3 id="explanation-title">Metric Explanation</h3>
+                <p id="explanation-text">Explanation details will appear here.</p>
+            </div>
+        </div>
+
+        <!-- FAQ Section (Example Structure) -->
+        <section class="faq-section card">
+            <h2 data-i18n="faqTitle">Frequently Asked Questions (FAQ)</h2>
+            <div itemscope itemtype="https://schema.org/FAQPage">
+                <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name"><span data-i18n="faq.q1.question">How does the mic test work?</span></summary>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text" data-i18n="faq.q1.answer">This tool uses your browser's built-in Web Audio API to access your microphone stream directly. It analyzes the audio in real-time to calculate metrics like volume, clipping, and noise levels without sending any audio data to a server. Everything happens securely within your browser.</p>
+                    </div>
+                </details>
+                <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name"><span data-i18n="faq.q2.question">How does the playback test work?</span></summary>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text" data-i18n="faq.q2.answer">When you click 'Record Snippet', the tool uses the MediaRecorder API to capture a short audio clip from your microphone. This clip is stored temporarily in your browser's memory. Clicking 'Playback' plays this stored clip back through your speakers or headphones, allowing you to hear how your microphone sounds.</p>
+                    </div>
+                </details>
+                 <details itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+                    <summary itemprop="name"><span data-i18n="faq.q3.question">Is this microphone test private?</span></summary>
+                    <div itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                        <p itemprop="text" data-i18n="faq.q3.answer">Yes, 100%. All audio processing and analysis happen directly in your web browser. Your microphone audio is never sent to our servers or any third party.</p>
+                    </div>
+                </details>
+                <!-- Add more FAQ items targeting keywords like "headphone mic test", "check microphone online" -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <p><span data-i18n="footerText">MicAnalyzer Pro - © 2025</span> | <a href="#privacy" data-i18n="privacyLink">Privacy Policy</a></p>
+        <!-- Add link to GitHub repo or credits if desired -->
+    </footer>
+
+    <!-- Service Worker Registration (Optional) -->
+    <!--
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration);
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+    </script>
+    -->
+
+</body>
+</html>
