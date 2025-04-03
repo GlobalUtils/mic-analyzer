@@ -1,0 +1,431 @@
+/* --- Theme Variables --- */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --primary-color: #007bff;
+    --secondary-color: #282828; /* Slightly lighter than bg for cards */
+    --border-color: #444;
+    --canvas-bg: #222; /* Darker canvas bg */
+    --meter-bg: #555;
+    --button-text-color: #ffffff;
+    --button-hover-bg: #0056b3;
+    --button-record-bg: #dc3545;
+    --button-record-hover-bg: #c82333;
+    --button-disabled-bg: #555;
+    --button-disabled-text: #aaa;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --link-color: #61dafb;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+    --header-bg: var(--secondary-color); /* Explicit header bg */
+    --footer-text-color: #aaa;
+}
+
+body.light-mode {
+    --bg-color: #f4f7f9;
+    --text-color: #333333;
+    --primary-color: #0056b3; /* Slightly darker blue for contrast */
+    --secondary-color: #ffffff;
+    --border-color: #d1d9e0;
+    --canvas-bg: #e9ecef;
+    --meter-bg: #ced4da;
+    --button-text-color: #ffffff;
+    --button-hover-bg: #004085;
+    --button-record-bg: #c82333; /* Keep red distinct */
+    --button-record-hover-bg: #a71d2a;
+    --button-disabled-bg: #e9ecef;
+    --button-disabled-text: #6c757d;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --link-color: #0056b3;
+    --success-color: #198754;
+    --warning-color: #ffc107; /* Keep warning yellow */
+    --error-color: #dc3545; /* Keep error red */
+    --header-bg: var(--secondary-color);
+    --footer-text-color: #6c757d;
+}
+
+/* --- Basic Reset & Global Styles --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Base font size */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#app {
+    max-width: 800px;
+    width: 100%;
+    background-color: var(--secondary-color);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px var(--shadow-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px; /* Space before footer */
+}
+
+/* --- Header & Theme/Lang Controls --- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--header-bg); /* Match app background */
+    /* Sticky header potential - requires more adjustments if needed */
+    /* position: sticky; top: 0; z-index: 10; */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.header h1 {
+    color: var(--primary-color);
+    margin: 0;
+    font-size: 1.8rem;
+    transition: color 0.3s ease;
+}
+
+.controls-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#themeToggleButton, #langSelect {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background-color: var(--bg-color); /* Use main bg for contrast */
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px; /* Pill shape */
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+ #themeToggleButton:hover, #langSelect:hover {
+     background-color: var(--primary-color);
+     color: var(--button-text-color);
+     border-color: var(--primary-color);
+     box-shadow: 0 2px 5px var(--shadow-color);
+ }
+ #langSelect {
+    appearance: none; /* Remove default arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23{encodeURIComponent(getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim())}" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Basic arrow */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 1em;
+    padding-right: 2em; /* Space for arrow */
+ }
+
+
+/* --- Results Bar --- */
+#resultsBar {
+    display: none; /* Hidden by default, shown by JS */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--bg-color);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    gap: 15px; /* Spacing between items */
+}
+.result-item {
+    text-align: center;
+    font-size: 0.9rem;
+}
+.result-item span { /* Label */
+    opacity: 0.8;
+}
+.result-item strong { /* Value */
+    display: inline-block; /* Keep on same line */
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-left: 5px;
+    transition: color 0.3s ease;
+}
+
+/* --- Sections --- */
+.section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: var(--bg-color); /* Use main bg for inner sections */
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.section:last-child {
+    margin-bottom: 0; /* No margin for the last section */
+}
+
+.section h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    font-size: 1.3rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+ .section h3 {
+     margin-top: 20px;
+     margin-bottom: 10px;
+     font-size: 1.1rem;
+     color: var(--text-color);
+     transition: color 0.3s ease;
+ }
+
+/* --- Controls (Buttons, Select) --- */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-right: 5px;
+    font-weight: bold;
+    flex-shrink: 0; /* Prevent label from shrinking too much */
+}
+
+select, button {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select {
+    flex-grow: 1;
+    min-width: 150px;
+}
+select:focus, button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+button:not(:disabled) {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--button-text-color);
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+    box-shadow: 0 3px 8px var(--shadow-color);
+}
+
+button:disabled {
+    background-color: var(--button-disabled-bg);
+    border-color: var(--border-color);
+    color: var(--button-disabled-text);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+button.recording {
+     background-color: var(--button-record-bg);
+     border-color: var(--button-record-bg);
+}
+ button.recording:hover:not(:disabled) {
+     background-color: var(--button-record-hover-bg);
+     box-shadow: 0 3px 8px var(--shadow-color);
+ }
+
+/* --- Volume Meter --- */
+#volumeMeterContainer {
+    width: 100%;
+    height: 25px;
+    background-color: var(--meter-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#volumeMeter {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.05s linear, background-color 0.3s ease; /* Smooth transition for volume */
+}
+
+/* --- Visualizations --- */
+canvas {
+    display: block;
+    width: 100%;
+    height: 150px; /* Fixed height for canvases */
+    background-color: var(--canvas-bg);
+    border-radius: 4px;
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#waveformCanvas { margin-bottom: 15px; }
+
+/* --- Playback & Status --- */
+#audioPlayback {
+    width: 100%;
+    margin-top: 15px;
+    display: none; /* Hidden initially */
+    border-radius: 4px;
+}
+/* Style the default audio player slightly */
+#audioPlayback::-webkit-media-controls-panel {
+    background-color: var(--bg-color); /* Match section background */
+    border-radius: 4px;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+ #audioPlayback::-webkit-media-controls-play-button,
+ #audioPlayback::-webkit-media-controls-mute-button,
+ #audioPlayback::-webkit-media-controls-timeline,
+ #audioPlayback::-webkit-media-controls-current-time-display,
+ #audioPlayback::-webkit-media-controls-time-remaining-display,
+ #audioPlayback::-webkit-media-controls-volume-slider {
+     filter: brightness(1.2) contrast(1.1); /* Make controls slightly clearer */
+     border-radius: 3px;
+ }
+ body.light-mode #audioPlayback::-webkit-media-controls-panel {
+     filter: brightness(0.95); /* Slightly darken in light mode */
+ }
+
+
+#status, #recordingStatus {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: var(--text-color); /* Use main text color */
+    min-height: 1.2em; /* Prevent layout shifts */
+    line-height: 1.4;
+    transition: color 0.3s ease;
+    font-weight: normal; /* Default weight */
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,0.1); /* Subtle background */
+    border-left: 4px solid var(--border-color); /* Default indicator */
+}
+ body.light-mode #status, body.light-mode #recordingStatus {
+     background-color: rgba(0,0,0,0.05);
+ }
+
+#status.status-info, #recordingStatus.status-info {
+    border-left-color: var(--primary-color);
+}
+#status.status-error, #recordingStatus.status-error {
+     color: var(--error-color);
+     border-left-color: var(--error-color);
+     font-weight: bold;
+ }
+ #status.status-success, #recordingStatus.status-success {
+     color: var(--success-color);
+     border-left-color: var(--success-color);
+     font-weight: bold;
+ }
+ #status.status-warning, #recordingStatus.status-warning {
+     color: var(--warning-color);
+     border-left-color: var(--warning-color);
+ }
+
+ .privacy-note {
+     font-size: 0.85rem;
+     color: var(--footer-text-color); /* Use footer color */
+     margin-top: 15px;
+     text-align: center;
+ }
+
+/* --- FAQ Section --- */
+.faq-section details {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+.faq-section summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+    padding: 5px 0;
+}
+.faq-section summary:hover {
+    color: var(--button-hover-bg);
+}
+.faq-section details[open] summary {
+    margin-bottom: 8px;
+}
+.faq-section p {
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--border-color);
+    font-size: 0.95rem;
+    color: var(--text-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- Footer --- */
+footer {
+    margin-top: auto; /* Push footer down */
+    padding: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--footer-text-color);
+    width: 100%;
+    max-width: 800px; /* Match app width */
+    transition: color 0.3s ease;
+}
+footer a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+footer a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
+}
+
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.6rem; }
+    #resultsBar { justify-content: space-between; } /* Better spacing */
+}
+
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    #app { padding: 15px; }
+    .header { flex-direction: column; gap: 15px; align-items: flex-start; }
+    .controls-right { width: 100%; justify-content: space-between; } /* Space out lang/theme */
+    .controls { flex-direction: column; align-items: stretch; }
+    select, button { width: 100%; }
+    canvas { height: 120px; }
+    #resultsBar { flex-direction: column; gap: 8px; align-items: flex-start; text-align: left;}
+    .result-item strong { display: inline; margin-left: 5px; }
+    footer { font-size: 0.85rem; }
+}
