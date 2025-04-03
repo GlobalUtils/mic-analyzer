@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es" data-lang="es" dir="ltr"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title data-i18n="metaTitle">Prueba de Micrófono Online Gratis - Verifica tu Micrófono al Instante y Privadamente</title> <!-- Example: Needs translation -->
+    <meta name="description" content="Prueba tu micrófono directamente en tu navegador. Prueba de micrófono gratuita, privada (procesamiento en el lado del cliente) e instantánea con visualización de audio. Funciona en Windows, Mac, ChromeOS." data-i18n="metaDescription" data-i18n-attr="content"> <!-- Example: Needs translation -->
+    <meta name="keywords" content="prueba de micro, prueba de microfono, test microfono, comprobar microfono, prueba microfono online, test microfono gratis, prueba microfono navegador, verificador microfono, test entrada audio, prueba microfono privada, prueba microfono segura, prueba microfono cliente" data-i18n="metaKeywords" data-i18n-attr="content"> <!-- Example: Needs translation -->
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://globalutils.github.io/mic-analyzer/es/" />
+
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="en" href="https://globalutils.github.io/mic-analyzer/" />
+    <link rel="alternate" hreflang="es" href="https://globalutils.github.io/mic-analyzer/es/" />
+    <link rel="alternate" hreflang="pt" href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <link rel="alternate" hreflang="fr" href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <link rel="alternate" hreflang="de" href="https://globalutils.github.io/mic-analyzer/de/" />
+    <link rel="alternate" hreflang="ar" href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <link rel="alternate" hreflang="x-default" href="https://globalutils.github.io/mic-analyzer/" />
+
+    <!-- Favicon (replace with your actual favicon) -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon"> <!-- Path Adjusted -->
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css"> <!-- Path Adjusted -->
+
+    <!-- Schema Markup (JSON-LD) - Content should ideally be translated too -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mic Analyzer - Prueba de Micrófono Online Gratis",
+      "description": "Una herramienta gratuita basada en navegador para probar tu micrófono al instante. Incluye visualización de audio en tiempo real (forma de onda, frecuencia) y reproducción de grabaciones. Centrado en la privacidad: todo el procesamiento ocurre en el lado del cliente en tu navegador, no se envían datos de audio a los servidores.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Basado en navegador (Windows, macOS, Linux, ChromeOS, Android, iOS)",
+      "browserRequirements": "Requiere Javascript y soporte para Web Audio API (Chrome, Firefox, Safari, Edge)",
+      "url": "https://globalutils.github.io/mic-analyzer/es/",
+      "inLanguage": "es",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Comprobación Instantánea de Micrófono",
+        "Medidor de Volumen en Tiempo Real",
+        "Visualización de Forma de Onda",
+        "Análisis de Espectro de Frecuencia",
+        "Grabación y Reproducción",
+        "Selección de Micrófono",
+        "Sin Instalación Requerida",
+        "Centrado en la Privacidad (Procesamiento en el Lado del Cliente)",
+        "Gratis",
+        "Modo Claro/Oscuro"
+      ],
+      "potentialAction": {
+        "@type": "Action",
+        "name": "Prueba tu Micrófono",
+        "target": "https://globalutils.github.io/mic-analyzer/es/"
+      }
+    }
+    </script>
+     <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "¿Cómo uso esta prueba de micrófono?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1. Otorga permiso para el micrófono cuando te lo solicite el navegador. 2. Selecciona el micrófono deseado de la lista desplegable. 3. Haz clic en 'Iniciar Prueba'. 4. Observa el medidor de volumen y las visualizaciones en tiempo real. 5. Opcionalmente, haz clic en 'Grabar Muestra' para grabar y reproducir audio."
+        }
+      },{
+        "@type": "Question",
+        "name": "¿Es segura y privada esta prueba de micrófono?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sí. Esta herramienta está diseñada priorizando la privacidad. Todo el procesamiento de audio se realiza directamente en tu navegador web (lado del cliente) utilizando APIs estándar del navegador. Tu audio del micrófono NO se envía ni se almacena en ningún servidor externo."
+        }
+      },{
+        "@type": "Question",
+        "name": "¿Por qué no funciona mi prueba de micrófono?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Razones comunes incluyen: 1. Se denegó el permiso del micrófono (revisa la configuración del navegador). 2. No hay micrófono conectado o seleccionado. 3. Se seleccionó el micrófono incorrecto. 4. El navegador no soporta las APIs necesarias (intenta actualizar o usar Chrome/Firefox/Edge/Safari). 5. Micrófono silenciado en la configuración del sistema."
+        }
+      },{
+        "@type": "Question",
+        "name": "¿Necesito instalar algo?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, esta es una herramienta completamente basada en navegador. No hay nada que descargar o instalar. Funciona directamente en la página web."
+        }
+      }]
+    }
+    </script>
+
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <h1 data-i18n="appTitle">Mic Analyzer</h1>
+            <div class="controls-right">
+                 <select id="langSelect" title="Seleccionar idioma"></select> <!-- Example: Needs translation -->
+                 <button id="themeToggleButton" data-i18n="toggleThemeBtn" data-i18n-attr="title" title="Cambiar tema"></button> <!-- Example: Needs translation -->
+            </div>
+        </header>
+
+        <div id="resultsBar">
+             <div class="result-item"><span data-i18n="resultsVolumeLabel">Volumen</span>: <strong id="resultsVolume">--%</strong></div>
+             <div class="result-item"><span data-i18n="resultsSampleRateLabel">Tasa de Muestreo</span>: <strong id="resultsSampleRate">---- Hz</strong></div>
+             <!-- Add more results here later -->
+        </div>
+
+        <section class="section" id="setupSection">
+            <h2 data-i18n="setupTitle">1. Configuración y Controles</h2>
+            <div class="controls">
+                <label for="micSelect" data-i18n="micSelectLabel">Seleccionar Micrófono:</label>
+                <select id="micSelect" disabled data-i18n="micSelectDefaultOption" data-i18n-attr="title" title="Los micrófonos disponibles aparecerán aquí">
+                    <option value="" data-i18n="micSelectLoading">Cargando dispositivos...</option>
+                </select>
+                <button id="startStopButton" data-i18n="startTestingBtn" data-i18n-attr="title" title="Iniciar o detener la prueba del micrófono">Iniciar Prueba</button>
+                <button id="recordButton" disabled data-i18n="recordSampleBtn" data-i18n-attr="title" title="Grabar una muestra corta de audio para reproducir">Grabar Muestra</button>
+            </div>
+             <p id="status" data-i18n="statusInitializing">Inicializando...</p>
+             <p class="privacy-note" data-i18n="privacyNotice">Tu audio se procesa localmente en tu navegador y nunca se envía a nuestros servidores.</p>
+        </section>
+
+        <section class="section" id="analysisSection" style="display: none;">
+             <h2 data-i18n="analysisTitle">2. Análisis en Tiempo Real</h2>
+             <label for="volumeMeterContainer" data-i18n="liveVolumeLabel">Nivel de Volumen en Vivo:</label>
+             <div id="volumeMeterContainer" data-i18n="liveVolumeTitle" data-i18n-attr="title" title="Volumen de entrada actual">
+                 <div id="volumeMeter"></div>
+             </div>
+
+             <h3 data-i18n="waveformTitle">Forma de Onda</h3>
+             <canvas id="waveformCanvas" data-i18n="waveformTitleAttr" data-i18n-attr="title" title="Representación visual de la señal de audio a lo largo del tiempo"></canvas>
+
+             <h3 data-i18n="frequencyTitle">Espectro de Frecuencia</h3>
+             <canvas id="frequencyCanvas" data-i18n="frequencyTitleAttr" data-i18n-attr="title" title="Distribución de las frecuencias de audio (bajas a altas)"></canvas>
+        </section>
+
+         <section class="section" id="recordingSection" style="display: none;">
+              <h2 data-i18n="recordingTitle">3. Grabación y Reproducción</h2>
+              <p id="recordingStatus" data-i18n="recordingStatusDefault">Aún no hay grabación.</p>
+              <audio id="audioPlayback" controls data-i18n="playbackTitle" data-i18n-attr="title" title="Reproduce tu muestra de audio grabada"></audio>
+         </section>
+
+         <section class="section faq-section">
+             <h2 data-i18n="faqTitle">Preguntas Frecuentes (FAQ)</h2>
+             <details>
+                 <summary data-i18n="faq1Question">¿Cómo uso esta prueba de micrófono?</summary>
+                 <p data-i18n="faq1Answer">1. Otorga permiso para el micrófono. 2. Selecciona tu micro. 3. Haz clic en 'Iniciar Prueba'. 4. Observa los visuales. 5. Opcionalmente, graba/reproduce.</p>
+             </details>
+             <details>
+                 <summary data-i18n="faq2Question">¿Es segura y privada esta prueba de micrófono?</summary>
+                 <p data-i18n="faq2Answer">Sí. Todo el procesamiento de audio se realiza localmente en tu navegador. Tu audio nunca sale de tu computadora y no se almacena en ningún lugar.</p>
+             </details>
+              <details>
+                 <summary data-i18n="faq3Question">¿Por qué no funciona mi prueba de micrófono?</summary>
+                 <p data-i18n="faq3Answer">Verifica: 1. Permisos del micro en el navegador. 2. Micrófono correcto seleccionado. 3. El micro no está silenciado en el sistema. 4. Intenta actualizar tu navegador (recomendado Chrome, Firefox, Edge, Safari).</p>
+             </details>
+             <details>
+                 <summary data-i18n="faq4Question">¿Necesito instalar algo?</summary>
+                 <p data-i18n="faq4Answer">No, esta herramienta funciona completamente online en tu navegador web. No se necesita instalación.</p>
+             </details>
+              <details>
+                 <summary data-i18n="faq5Question">¿Qué significan las visualizaciones?</summary>
+                 <p data-i18n="faq5Answer">El Medidor de Volumen muestra la sonoridad. La Forma de Onda muestra la forma de la onda sonora en el tiempo. El Espectro de Frecuencia muestra la intensidad de diferentes tonos (sonidos bajos a la izquierda, altos a la derecha).</p>
+             </details>
+         </section>
+
+    </div>
+
+    <footer>
+        <p>Mic Analyzer por <a href="https://github.com/GlobalUtils" target="_blank" rel="noopener">GlobalUtils</a>. <span data-i18n="footerPrivacy">Pruebas centradas en la privacidad.</span></p>
+    </footer>
+
+    <!-- Main Script (Module) -->
+    <script src="../js/main.js" type="module" defer></script> <!-- Path Adjusted -->
+</body>
+</html>
