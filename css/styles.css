@@ -1,529 +1,431 @@
-/* --- Base Styles & Variables --- */
+/* --- Theme Variables --- */
 :root {
-    --color-primary: #007bff;
-    --color-primary-dark: #0056b3;
-    --color-secondary: #6c757d;
-    --color-success: #28a745;
-    --color-warning: #ffc107;
-    --color-danger: #dc3545;
-    --color-light: #f8f9fa;
-    --color-dark: #343a40;
-    --color-text: #212529;
-    --color-text-muted: #6c757d;
-    --color-background: #ffffff;
-    --color-border: #dee2e6;
-    --color-card-bg: #ffffff;
-    --color-shadow: rgba(0, 0, 0, 0.1);
-
-    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    --font-size-base: 1rem; /* Typically 16px */
-    --line-height-base: 1.5;
-
-    --spacing-xs: 0.25rem; /* 4px */
-    --spacing-sm: 0.5rem;  /* 8px */
-    --spacing-md: 1rem;    /* 16px */
-    --spacing-lg: 1.5rem;  /* 24px */
-    --spacing-xl: 2rem;    /* 32px */
-
-    --border-radius: 0.25rem;
-    --box-shadow: 0 0.125rem 0.25rem var(--color-shadow);
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --primary-color: #007bff;
+    --secondary-color: #282828; /* Slightly lighter than bg for cards */
+    --border-color: #444;
+    --canvas-bg: #222; /* Darker canvas bg */
+    --meter-bg: #555;
+    --button-text-color: #ffffff;
+    --button-hover-bg: #0056b3;
+    --button-record-bg: #dc3545;
+    --button-record-hover-bg: #c82333;
+    --button-disabled-bg: #555;
+    --button-disabled-text: #aaa;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --link-color: #61dafb;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --error-color: #dc3545;
+    --header-bg: var(--secondary-color); /* Explicit header bg */
+    --footer-text-color: #aaa;
 }
 
-/* Basic Reset & Body */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
+body.light-mode {
+    --bg-color: #f4f7f9;
+    --text-color: #333333;
+    --primary-color: #0056b3; /* Slightly darker blue for contrast */
+    --secondary-color: #ffffff;
+    --border-color: #d1d9e0;
+    --canvas-bg: #e9ecef;
+    --meter-bg: #ced4da;
+    --button-text-color: #ffffff;
+    --button-hover-bg: #004085;
+    --button-record-bg: #c82333; /* Keep red distinct */
+    --button-record-hover-bg: #a71d2a;
+    --button-disabled-bg: #e9ecef;
+    --button-disabled-text: #6c757d;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --link-color: #0056b3;
+    --success-color: #198754;
+    --warning-color: #ffc107; /* Keep warning yellow */
+    --error-color: #dc3545; /* Keep error red */
+    --header-bg: var(--secondary-color);
+    --footer-text-color: #6c757d;
+}
+
+/* --- Basic Reset & Global Styles --- */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 html {
-    font-size: 100%; /* Use browser default, typically 16px */
     scroll-behavior: smooth;
+    font-size: 16px; /* Base font size */
 }
 
 body {
-    font-family: var(--font-family-sans-serif);
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    color: var(--color-text);
-    background-color: var(--color-background);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 100vh;
-    padding-top: 60px; /* Space for fixed header */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- Layout & Structure --- */
-.container {
-    width: 90%;
-    max-width: 1140px;
-    margin: var(--spacing-lg) auto;
-    flex-grow: 1;
-    display: grid;
-    gap: var(--spacing-lg);
-    grid-template-columns: 1fr; /* Default single column for mobile */
-}
-
-/* On larger screens, use two columns */
-@media (min-width: 768px) {
-    .container {
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    }
-    /* Span sections if needed, e.g., make analysis wider */
-     .analysis-section, .faq-section {
-        grid-column: span 1; /* Default span */
-    }
-     /* Example: Make analysis span 2 columns if controls is narrow */
-    /* .analysis-section { grid-column: span 2; } */
-}
-@media (min-width: 992px) {
-     .analysis-section {
-         /* grid-column: span 2; /* Example: Make analysis span 2 columns */
-     }
-}
-
-
-.card {
-    background-color: var(--color-card-bg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-lg);
-    box-shadow: var(--box-shadow);
-    height: fit-content; /* Prevent cards from stretching unevenly */
-}
-
-/* --- Header & Footer --- */
-.main-header {
-    background-color: var(--color-light);
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--spacing-sm) 5%;
-    position: fixed; /* Fixed header */
-    top: 0;
-    left: 0;
+#app {
+    max-width: 800px;
     width: 100%;
-    z-index: 1000;
+    background-color: var(--secondary-color);
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px var(--shadow-color);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px; /* Space before footer */
+}
+
+/* --- Header & Theme/Lang Controls --- */
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 60px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--header-bg); /* Match app background */
+    /* Sticky header potential - requires more adjustments if needed */
+    /* position: sticky; top: 0; z-index: 10; */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.main-header h1 {
-    font-size: 1.5rem;
-    color: var(--color-dark);
+.header h1 {
+    color: var(--primary-color);
     margin: 0;
+    font-size: 1.8rem;
+    transition: color 0.3s ease;
 }
 
-.language-selector a {
-    margin-left: var(--spacing-sm);
-    color: var(--color-primary);
-    text-decoration: none;
-    font-weight: 500;
-}
-.language-selector a:hover,
-.language-selector a.active {
-    text-decoration: underline;
-    color: var(--color-primary-dark);
-}
-
-
-.main-footer {
-    background-color: var(--color-light);
-    border-top: 1px solid var(--color-border);
-    padding: var(--spacing-md) 5%;
-    text-align: center;
-    color: var(--color-text-muted);
-    margin-top: var(--spacing-xl);
-}
-
-.main-footer a {
-    color: var(--color-secondary);
-}
-
-/* --- Controls Section --- */
-.controls-section h2,
-.analysis-section h2,
-.tips-section h2,
-.faq-section h2 {
-    margin-bottom: var(--spacing-md);
-    font-size: 1.25rem;
-    color: var(--color-dark);
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: var(--spacing-sm);
-}
-
-.button-group {
+.controls-right {
     display: flex;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-    flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+    gap: 10px;
+    align-items: center;
 }
 
-.button {
-    display: inline-block;
-    font-weight: 400;
-    color: var(--color-text);
-    text-align: center;
-    vertical-align: middle;
+#themeToggleButton, #langSelect {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background-color: var(--bg-color); /* Use main bg for contrast */
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 20px; /* Pill shape */
     cursor: pointer;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.375rem 0.75rem;
-    font-size: var(--font-size-base);
-    line-height: var(--line-height-base);
-    border-radius: var(--border-radius);
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-
-.button-primary {
-    color: #fff;
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-.button-primary:hover {
-    background-color: var(--color-primary-dark);
-    border-color: var(--color-primary-dark);
-}
-
-.button:disabled {
-    color: var(--color-text-muted);
-    background-color: var(--color-light);
-    border-color: var(--color-border);
-    cursor: not-allowed;
-    opacity: 0.65;
-}
-
-.button:not(:disabled):hover {
-    background-color: var(--color-light);
-    border-color: var(--color-border);
-}
-
-.button:focus {
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus indicator */
-}
-
-.status-message {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    color: var(--color-text-muted);
-}
-.status-message.status-error {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-}
-.status-message.status-warning {
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-    color: #856404;
-}
-.status-message.status-recording {
-    background-color: #f8d7da; /* Use danger color for recording */
-    border-color: #f5c6cb;
-    color: #721c24;
-    font-weight: bold;
-}
+ #themeToggleButton:hover, #langSelect:hover {
+     background-color: var(--primary-color);
+     color: var(--button-text-color);
+     border-color: var(--primary-color);
+     box-shadow: 0 2px 5px var(--shadow-color);
+ }
+ #langSelect {
+    appearance: none; /* Remove default arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23{encodeURIComponent(getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim())}" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Basic arrow */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 1em;
+    padding-right: 2em; /* Space for arrow */
+ }
 
 
-.mic-info {
-    margin-top: var(--spacing-sm);
+/* --- Results Bar --- */
+#resultsBar {
+    display: none; /* Hidden by default, shown by JS */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--bg-color);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    gap: 15px; /* Spacing between items */
+}
+.result-item {
+    text-align: center;
     font-size: 0.9rem;
-    color: var(--color-text-muted);
 }
-#mic-name {
-    font-weight: 500;
-    color: var(--color-dark);
+.result-item span { /* Label */
+    opacity: 0.8;
+}
+.result-item strong { /* Value */
+    display: inline-block; /* Keep on same line */
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-left: 5px;
+    transition: color 0.3s ease;
 }
 
-/* --- Analysis Section --- */
-.visualization {
-    margin-bottom: var(--spacing-lg);
+/* --- Sections --- */
+.section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: var(--bg-color); /* Use main bg for inner sections */
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.section:last-child {
+    margin-bottom: 0; /* No margin for the last section */
 }
 
-.visualization h3 {
+.section h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    font-size: 1.3rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+ .section h3 {
+     margin-top: 20px;
+     margin-bottom: 10px;
+     font-size: 1.1rem;
+     color: var(--text-color);
+     transition: color 0.3s ease;
+ }
+
+/* --- Controls (Buttons, Select) --- */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-right: 5px;
+    font-weight: bold;
+    flex-shrink: 0; /* Prevent label from shrinking too much */
+}
+
+select, button {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    cursor: pointer;
     font-size: 1rem;
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-secondary);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-#visualizer-canvas {
+select {
+    flex-grow: 1;
+    min-width: 150px;
+}
+select:focus, button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+button:not(:disabled) {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--button-text-color);
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--button-hover-bg);
+    box-shadow: 0 3px 8px var(--shadow-color);
+}
+
+button:disabled {
+    background-color: var(--button-disabled-bg);
+    border-color: var(--border-color);
+    color: var(--button-disabled-text);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+button.recording {
+     background-color: var(--button-record-bg);
+     border-color: var(--button-record-bg);
+}
+ button.recording:hover:not(:disabled) {
+     background-color: var(--button-record-hover-bg);
+     box-shadow: 0 3px 8px var(--shadow-color);
+ }
+
+/* --- Volume Meter --- */
+#volumeMeterContainer {
+    width: 100%;
+    height: 25px;
+    background-color: var(--meter-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#volumeMeter {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 0.05s linear, background-color 0.3s ease; /* Smooth transition for volume */
+}
+
+/* --- Visualizations --- */
+canvas {
     display: block;
     width: 100%;
-    height: 150px; /* Fixed height */
-    background-color: var(--color-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
+    height: 150px; /* Fixed height for canvases */
+    background-color: var(--canvas-bg);
+    border-radius: 4px;
+    margin-top: 10px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.metric-grid {
-    display: grid;
-    gap: var(--spacing-md);
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
-}
+#waveformCanvas { margin-bottom: 15px; }
 
-.metric-card {
-    background-color: var(--color-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-md);
-    text-align: center;
-    position: relative; /* For positioning info button */
-}
-
-.metric-card h3 {
-    font-size: 0.9rem;
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-secondary);
-}
-
-.metric-card .value {
-    font-size: 1.2rem;
-    font-weight: 500;
-    margin-bottom: var(--spacing-sm);
-    color: var(--color-dark);
-}
-
-.metric-card .value.status-ok { color: var(--color-success); }
-.metric-card .value.status-warn { color: var(--color-warning); }
-.metric-card .value.status-critical { color: var(--color-danger); font-weight: bold; }
-
-
-/* Styling the Meter Element */
-meter {
+/* --- Playback & Status --- */
+#audioPlayback {
     width: 100%;
-    height: 12px;
-    border-radius: 6px;
-    border: 1px solid var(--color-border);
-    /* Removing default appearances */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    margin-top: 15px;
+    display: none; /* Hidden initially */
+    border-radius: 4px;
 }
-/* Webkit browsers (Chrome, Safari) */
-meter::-webkit-meter-bar {
-    background: var(--color-light);
-    border: none;
-    border-radius: 6px;
+/* Style the default audio player slightly */
+#audioPlayback::-webkit-media-controls-panel {
+    background-color: var(--bg-color); /* Match section background */
+    border-radius: 4px;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-meter::-webkit-meter-optimum-value {
-    background: var(--color-success);
-    border-radius: 6px;
-}
-meter::-webkit-meter-suboptimum-value {
-    background: var(--color-warning);
-    border-radius: 6px;
-}
-meter::-webkit-meter-even-less-good-value {
-    background: var(--color-danger);
-    border-radius: 6px;
-}
-/* Firefox */
-meter::-moz-meter-bar {
-    border-radius: 6px;
-}
-meter:-moz-meter-optimum::-moz-meter-bar {
-    background: var(--color-success);
-}
-meter:-moz-meter-sub-optimum::-moz-meter-bar {
-    background: var(--color-warning);
-}
-meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
-    background: var(--color-danger);
-}
-
-.info-button {
-    position: absolute;
-    top: var(--spacing-xs);
-    right: var(--spacing-xs);
-    background: none;
-    border: none;
-    color: var(--color-secondary);
-    cursor: pointer;
-    font-size: 0.9rem;
-    padding: var(--spacing-xs);
-    line-height: 1;
-    border-radius: 50%;
-}
-.info-button:hover {
-    color: var(--color-dark);
-    background-color: rgba(0,0,0,0.05);
-}
+ #audioPlayback::-webkit-media-controls-play-button,
+ #audioPlayback::-webkit-media-controls-mute-button,
+ #audioPlayback::-webkit-media-controls-timeline,
+ #audioPlayback::-webkit-media-controls-current-time-display,
+ #audioPlayback::-webkit-media-controls-time-remaining-display,
+ #audioPlayback::-webkit-media-controls-volume-slider {
+     filter: brightness(1.2) contrast(1.1); /* Make controls slightly clearer */
+     border-radius: 3px;
+ }
+ body.light-mode #audioPlayback::-webkit-media-controls-panel {
+     filter: brightness(0.95); /* Slightly darken in light mode */
+ }
 
 
-/* --- Tips Section --- */
-.tips-section ul {
-    list-style: none;
-    padding-left: 0;
+#status, #recordingStatus {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: var(--text-color); /* Use main text color */
+    min-height: 1.2em; /* Prevent layout shifts */
+    line-height: 1.4;
+    transition: color 0.3s ease;
+    font-weight: normal; /* Default weight */
+    padding: 8px 12px;
+    border-radius: 4px;
+    background-color: rgba(0,0,0,0.1); /* Subtle background */
+    border-left: 4px solid var(--border-color); /* Default indicator */
 }
+ body.light-mode #status, body.light-mode #recordingStatus {
+     background-color: rgba(0,0,0,0.05);
+ }
 
-.tips-section li {
-    background-color: var(--color-light);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    padding: var(--spacing-sm) var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
+#status.status-info, #recordingStatus.status-info {
+    border-left-color: var(--primary-color);
 }
-.tips-section li .icon {
-    font-size: 1.2rem;
-}
-.tips-section li.tip-warning .icon { color: var(--color-warning); }
-.tips-section li.tip-danger .icon { color: var(--color-danger); }
-.tips-section li.tip-info .icon { color: var(--color-primary); }
+#status.status-error, #recordingStatus.status-error {
+     color: var(--error-color);
+     border-left-color: var(--error-color);
+     font-weight: bold;
+ }
+ #status.status-success, #recordingStatus.status-success {
+     color: var(--success-color);
+     border-left-color: var(--success-color);
+     font-weight: bold;
+ }
+ #status.status-warning, #recordingStatus.status-warning {
+     color: var(--warning-color);
+     border-left-color: var(--warning-color);
+ }
 
+ .privacy-note {
+     font-size: 0.85rem;
+     color: var(--footer-text-color); /* Use footer color */
+     margin-top: 15px;
+     text-align: center;
+ }
 
 /* --- FAQ Section --- */
 .faq-section details {
-    border-bottom: 1px solid var(--color-border);
-    margin-bottom: var(--spacing-sm);
-}
-.faq-section details:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
 }
 .faq-section summary {
-    padding: var(--spacing-sm) 0;
-    font-weight: 500;
     cursor: pointer;
-    list-style: none; /* Remove default marker */
-    position: relative;
-    padding-right: var(--spacing-lg); /* Space for custom marker */
-}
-.faq-section summary::-webkit-details-marker {
-    display: none; /* Hide default marker (Chrome/Safari) */
-}
-.faq-section summary::after { /* Custom marker */
-    content: '+';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.2rem;
-    color: var(--color-primary);
-}
-.faq-section details[open] summary::after {
-    content: '−';
-}
-.faq-section details div { /* Answer container */
-    padding: var(--spacing-sm) 0 var(--spacing-md) 0;
-    color: var(--color-text-muted);
-}
-
-
-/* --- Modal --- */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed;
-    z-index: 1050;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5); /* Dim background */
-}
-
-.modal-content {
-    background-color: var(--color-background);
-    margin: 15% auto; /* Centered */
-    padding: var(--spacing-lg);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    width: 80%;
-    max-width: 500px;
-    position: relative;
-    box-shadow: 0 0.5rem 1rem var(--color-shadow);
-}
-
-.close-button {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-md);
-    color: var(--color-secondary);
-    font-size: 1.5rem;
     font-weight: bold;
-    background: none;
-    border: none;
-    cursor: pointer;
-    line-height: 1;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+    padding: 5px 0;
+}
+.faq-section summary:hover {
+    color: var(--button-hover-bg);
+}
+.faq-section details[open] summary {
+    margin-bottom: 8px;
+}
+.faq-section p {
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 2px solid var(--border-color);
+    font-size: 0.95rem;
+    color: var(--text-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
-.close-button:hover,
-.close-button:focus {
-    color: var(--color-dark);
+/* --- Footer --- */
+footer {
+    margin-top: auto; /* Push footer down */
+    padding: 15px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--footer-text-color);
+    width: 100%;
+    max-width: 800px; /* Match app width */
+    transition: color 0.3s ease;
+}
+footer a {
+    color: var(--link-color);
     text-decoration: none;
-    outline: none;
+    transition: color 0.3s ease;
 }
-
-#explanation-title {
-    margin-bottom: var(--spacing-md);
-}
-
-/* --- Accessibility --- */
-/* Ensure focus styles are visible */
-a:focus, button:focus, summary:focus, details:focus {
-     outline: 2px solid var(--color-primary);
-     outline-offset: 2px;
-     box-shadow: none; /* Override default button focus if needed */
-}
-/* Skip link (optional but good practice) */
-.skip-link {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    background: var(--color-primary);
-    color: white;
-    padding: 8px;
-    z-index: 1100;
-    transition: top 0.3s;
-}
-.skip-link:focus {
-    top: 10px;
+footer a:hover {
+    text-decoration: underline;
+    color: var(--primary-color);
 }
 
 
-/* --- Media Queries for Responsiveness --- */
-@media (max-width: 767.98px) {
-    body {
-        padding-top: 50px; /* Adjust for smaller header */
-    }
-    .main-header {
-        height: 50px;
-        padding: var(--spacing-xs) 5%;
-    }
-    .main-header h1 {
-        font-size: 1.2rem;
-    }
-    .container {
-        width: 95%;
-        gap: var(--spacing-md);
-    }
-    .metric-grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Smaller min size */
-        gap: var(--spacing-sm);
-    }
-    .metric-card {
-        padding: var(--spacing-sm);
-    }
-    .metric-card .value {
-        font-size: 1rem;
-    }
-    .button-group {
-        flex-direction: column; /* Stack buttons vertically */
-        align-items: stretch; /* Make buttons full width */
-    }
-    .modal-content {
-        width: 90%;
-        margin: 20% auto;
-    }
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.6rem; }
+    #resultsBar { justify-content: space-between; } /* Better spacing */
+}
+
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    #app { padding: 15px; }
+    .header { flex-direction: column; gap: 15px; align-items: flex-start; }
+    .controls-right { width: 100%; justify-content: space-between; } /* Space out lang/theme */
+    .controls { flex-direction: column; align-items: stretch; }
+    select, button { width: 100%; }
+    canvas { height: 120px; }
+    #resultsBar { flex-direction: column; gap: 8px; align-items: flex-start; text-align: left;}
+    .result-item strong { display: inline; margin-left: 5px; }
+    footer { font-size: 0.85rem; }
 }
