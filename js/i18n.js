@@ -8,6 +8,7 @@ let translations = {}; // Cache for loaded translations: { 'en': {...}, 'es': {.
 
 /**
  * Fetches the translation file for a given language.
+ * Adjusts fetch path based on current page depth (root vs subdirectory).
  * @param {string} lang - Language code (e.g., 'en', 'es').
  * @returns {Promise<object>} The translation data object.
  */
@@ -17,12 +18,20 @@ async function fetchTranslations(lang) {
         console.warn(`Unsupported language code requested: ${lang}. Falling back to ${DEFAULT_LANG}.`);
         lang = DEFAULT_LANG;
     }
-    const response = await fetch(`locales/${lang}.json`);
+    // Determine base path for locales based on current HTML file location
+    const isSubdirectory = window.location.pathname.split('/').filter(Boolean).length > 1; // Simple check if path has more than one segment after domain (e.g., /mic-analyzer/es/)
+    const basePath = isSubdirectory ? '../' : ''; // Go up one level if in a subdirectory
+    const url = `${basePath}locales/${lang}.json`;
+
+    console.log(`Fetching translations from: ${url}`); // Debugging fetch path
+
+    const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`Failed to load translation file for ${lang}: ${response.statusText}`);
+        throw new Error(`Failed to load translation file for ${lang} from ${url}: ${response.statusText}`);
     }
     return await response.json();
 }
+
 
 /**
  * Loads translations for the specified language into the cache.
@@ -92,7 +101,10 @@ function applyTranslationsToDOM() {
                  element.title = translation;
              } else if (attr === 'placeholder') {
                  element.placeholder = translation;
-             } else {
+             } else if (attr === 'content' && element.tagName === 'META') { // Handle meta tags
+                 element.setAttribute('content', translation);
+             }
+              else {
                  // Handle other attributes if needed
                  element.setAttribute(attr, translation);
              }
@@ -101,7 +113,7 @@ function applyTranslationsToDOM() {
         }
     });
 
-    // Set document language and direction
+    // Set document language and direction (already set in HTML, but good practice)
     document.documentElement.lang = currentLang;
     document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr'; // Basic RTL support
 
@@ -115,45 +127,92 @@ function applyTranslationsToDOM() {
 }
 
 /**
- * Sets the current language, loads translations, applies them, and saves the preference.
- * @param {string} lang - The language code to switch to.
+ * Sets the current language state *locally* (used primarily for initial load).
+ * Navigation is handled separately by the event listener.
+ * @param {string} lang - The language code.
  */
-export async function setLanguage(lang) {
+async function setInternalLanguageState(lang) {
     if (!SUPPORTED_LANGUAGES[lang]) {
-        console.warn(`Attempted to set unsupported language: ${lang}. Using ${currentLang}.`);
-        return;
+        console.warn(`Attempted to set unsupported language internally: ${lang}. Using ${DEFAULT_LANG}.`);
+        lang = DEFAULT_LANG;
     }
     currentLang = lang;
-    await loadTranslations(lang); // Ensure translations are loaded
+    await loadTranslations(lang); // Ensure translations are loaded for the current page
     applyTranslationsToDOM();
-    saveToLocalStorage(LOCAL_STORAGE_LANG_KEY, lang);
-    // Update the language selector dropdown to reflect the change
+    saveToLocalStorage(LOCAL_STORAGE_LANG_KEY, lang); // Still useful for remembering preference if user navigates away and back
+    // Update the language selector dropdown to reflect the current page's language
     const langSelect = uiElements.langSelect();
     if (langSelect) langSelect.value = lang;
 }
+
 
 /**
  * Initializes internationalization: detects language, loads translations, sets up switcher.
  */
 export async function initI18n() {
-    // Detect initial language: 1. localStorage, 2. browser preference, 3. default
-    let initialLang = getFromLocalStorage(LOCAL_STORAGE_LANG_KEY);
+    // --- Step 2 Modification: Initial Language Detection ---
+    // 1. Prioritize data-lang attribute from HTML
+    let initialLang = document.documentElement.getAttribute('data-lang');
+    console.log(`Detected data-lang: ${initialLang}`);
+
     if (!initialLang || !SUPPORTED_LANGUAGES[initialLang]) {
-        const browserLang = navigator.language.split('-')[0]; // Get 'en' from 'en-US'
-        initialLang = SUPPORTED_LANGUAGES[browserLang] ? browserLang : DEFAULT_LANG;
+        console.log(`data-lang invalid or missing. Falling back...`);
+        // 2. Fallback to localStorage
+        initialLang = getFromLocalStorage(LOCAL_STORAGE_LANG_KEY);
+        if (!initialLang || !SUPPORTED_LANGUAGES[initialLang]) {
+            console.log(`localStorage lang invalid or missing. Falling back to browser lang...`);
+            // 3. Fallback to browser preference
+            const browserLang = navigator.language.split('-')[0]; // Get 'en' from 'en-US'
+            initialLang = SUPPORTED_LANGUAGES[browserLang] ? browserLang : DEFAULT_LANG;
+            console.log(`Using browser/default lang: ${initialLang}`);
+        } else {
+             console.log(`Using localStorage lang: ${initialLang}`);
+        }
     }
+    // --- End Step 2 Modification ---
 
-    currentLang = initialLang; // Set globally before loading
-    await loadTranslations(currentLang); // Load initial language
+    // Set the internal state based on the determined language for *this* page
+    await setInternalLanguageState(initialLang);
+
+    // Populate the language selector dropdown
     populateLangSelector(currentLang, t); // Populate selector using loaded translations
-    applyTranslationsToDOM(); // Apply initial translations
 
-    // Add event listener to language selector
+    // --- Step 3 Modification: Language Switching Navigation ---
     const langSelect = uiElements.langSelect();
     if (langSelect) {
         langSelect.addEventListener('change', (event) => {
-            setLanguage(event.target.value);
+            const selectedLang = event.target.value;
+            let targetPath;
+
+            // Construct the target *path* based on the selected language
+            // Assuming deployment is at 'https://<domain>/mic-analyzer/'
+            const basePath = '/mic-analyzer'; // Adjust if your repo name or deployment path changes
+
+            if (selectedLang === 'en') { // Assuming 'en' is the root
+                targetPath = `${basePath}/`;
+            } else if (SUPPORTED_LANGUAGES[selectedLang]) {
+                targetPath = `${basePath}/${selectedLang}/`;
+            } else {
+                console.warn(`Invalid language selected: ${selectedLang}`);
+                return; // Don't navigate if language is somehow invalid
+            }
+
+            // Get current path, ensuring it ends with a slash for comparison consistency
+            let currentPath = window.location.pathname;
+            if (!currentPath.endsWith('/')) {
+                currentPath += '/';
+            }
+
+            // Navigate the browser only if the target path is different
+            if (currentPath !== targetPath) {
+                 console.log(`Navigating from ${currentPath} to ${targetPath}`);
+                 window.location.href = targetPath; // Use relative path for navigation
+            } else {
+                 console.log(`Already on the correct page for language: ${selectedLang}`);
+            }
         });
     }
+    // --- End Step 3 Modification ---
+
     console.log(`i18n initialized with language: ${currentLang}`);
 }
