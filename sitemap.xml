@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- English Version (Root) -->
+  <url>
+    <loc>https://globalutils.github.io/mic-analyzer/</loc>
+    <lastmod>2025-04-04</lastmod> <!-- Optional: Update with last modification date -->
+    <changefreq>monthly</changefreq> <!-- Optional: How often the content might change -->
+    <priority>1.0</priority> <!-- Optional: Relative priority (Google often ignores) -->
+    <xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://globalutils.github.io/mic-analyzer/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="es"
+               href="https://globalutils.github.io/mic-analyzer/es/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="pt"
+               href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="fr"
+               href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="de"
+               href="https://globalutils.github.io/mic-analyzer/de/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="ar"
+               href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="x-default"
+               href="https://globalutils.github.io/mic-analyzer/" />
+  </url>
+
+  <!-- Spanish Version -->
+  <url>
+    <loc>https://globalutils.github.io/mic-analyzer/es/</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://globalutils.github.io/mic-analyzer/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="es"
+               href="https://globalutils.github.io/mic-analyzer/es/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="pt"
+               href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="fr"
+               href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="de"
+               href="https://globalutils.github.io/mic-analyzer/de/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="ar"
+               href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="x-default"
+               href="https://globalutils.github.io/mic-analyzer/" />
+  </url>
+
+  <!-- Portuguese Version -->
+  <url>
+    <loc>https://globalutils.github.io/mic-analyzer/pt/</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+     <xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://globalutils.github.io/mic-analyzer/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="es"
+               href="https://globalutils.github.io/mic-analyzer/es/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="pt"
+               href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="fr"
+               href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="de"
+               href="https://globalutils.github.io/mic-analyzer/de/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="ar"
+               href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="x-default"
+               href="https://globalutils.github.io/mic-analyzer/" />
+  </url>
+
+  <!-- French Version -->
+  <url>
+    <loc>https://globalutils.github.io/mic-analyzer/fr/</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+     <xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://globalutils.github.io/mic-analyzer/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="es"
+               href="https://globalutils.github.io/mic-analyzer/es/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="pt"
+               href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="fr"
+               href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="de"
+               href="https://globalutils.github.io/mic-analyzer/de/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="ar"
+               href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="x-default"
+               href="https://globalutils.github.io/mic-analyzer/" />
+  </url>
+
+  <!-- German Version -->
+  <url>
+    <loc>https://globalutils.github.io/mic-analyzer/de/</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+     <xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://globalutils.github.io/mic-analyzer/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="es"
+               href="https://globalutils.github.io/mic-analyzer/es/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="pt"
+               href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="fr"
+               href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="de"
+               href="https://globalutils.github.io/mic-analyzer/de/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="ar"
+               href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="x-default"
+               href="https://globalutils.github.io/mic-analyzer/" />
+  </url>
+
+  <!-- Arabic Version -->
+  <url>
+    <loc>https://globalutils.github.io/mic-analyzer/ar/</loc>
+    <lastmod>YYYY-MM-DD</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+     <xhtml:link
+               rel="alternate"
+               hreflang="en"
+               href="https://globalutils.github.io/mic-analyzer/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="es"
+               href="https://globalutils.github.io/mic-analyzer/es/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="pt"
+               href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="fr"
+               href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="de"
+               href="https://globalutils.github.io/mic-analyzer/de/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="ar"
+               href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <xhtml:link
+               rel="alternate"
+               hreflang="x-default"
+               href="https://globalutils.github.io/mic-analyzer/" />
+  </url>
+
+</urlset>
