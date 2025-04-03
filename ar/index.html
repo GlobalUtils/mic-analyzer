@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" data-lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title data-i18n="metaTitle">Free Online Mic Test - Check Your Microphone Instantly & Privately</title>
+    <meta name="description" content="Test your microphone directly in your browser. Free, private (client-side processing), and instant mic check with audio visualization. Works on Windows, Mac, ChromeOS." data-i18n="metaDescription" data-i18n-attr="content">
+    <meta name="keywords" content="mic test, microphone test, test mic, check mic, online mic test, free mic test, browser mic test, mic checker, audio input test, privacy mic test, secure mic test, client side mic test" data-i18n="metaKeywords" data-i18n-attr="content">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://globalutils.github.io/mic-analyzer/ar/" />
+
+    <!-- Hreflang Tags -->
+    <link rel="alternate" hreflang="en" href="https://globalutils.github.io/mic-analyzer/" />
+    <link rel="alternate" hreflang="es" href="https://globalutils.github.io/mic-analyzer/es/" />
+    <link rel="alternate" hreflang="pt" href="https://globalutils.github.io/mic-analyzer/pt/" />
+    <link rel="alternate" hreflang="fr" href="https://globalutils.github.io/mic-analyzer/fr/" />
+    <link rel="alternate" hreflang="de" href="https://globalutils.github.io/mic-analyzer/de/" />
+    <link rel="alternate" hreflang="ar" href="https://globalutils.github.io/mic-analyzer/ar/" />
+    <link rel="alternate" hreflang="x-default" href="https://globalutils.github.io/mic-analyzer/" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="../favicon.ico" type="image/x-icon"> <!-- Path Adjusted -->
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../css/style.css"> <!-- Path Adjusted -->
+
+    <!-- Schema Markup (JSON-LD) - Remains in English for template approach -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mic Analyzer - Free Online Mic Test",
+      "description": "A free, browser-based tool to test your microphone instantly. Features real-time audio visualization (waveform, frequency) and recording playback. Privacy-focused: all processing happens client-side in your browser, no audio data is sent to servers.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Browser-based (Windows, macOS, Linux, ChromeOS, Android, iOS)",
+      "browserRequirements": "Requires Javascript and Web Audio API support (Chrome, Firefox, Safari, Edge)",
+      "url": "https://globalutils.github.io/mic-analyzer/ar/", // URL Adjusted
+      "inLanguage": "ar", // Added language hint
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Instant Microphone Check",
+        "Real-time Volume Meter",
+        "Waveform Visualization",
+        "Frequency Spectrum Analysis",
+        "Recording & Playback",
+        "Microphone Selection",
+        "No Installation Required",
+        "Privacy Focused (Client-Side Processing)",
+        "Free to Use",
+        "Light/Dark Mode"
+      ],
+      "potentialAction": {
+        "@type": "Action",
+        "name": "Test Your Microphone",
+        "target": "https://globalutils.github.io/mic-analyzer/ar/" // URL Adjusted
+      }
+    }
+    </script>
+     <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do I use this microphone test?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1. Grant microphone permission when prompted by your browser. 2. Select your desired microphone from the dropdown list. 3. Click 'Start Testing'. 4. Observe the real-time volume meter and visualizations. 5. Optionally, click 'Record Sample' to record and playback audio."
+        }
+      },{
+        "@type": "Question",
+        "name": "Is this mic test safe and private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. This tool is designed with privacy as a priority. All audio processing happens directly within your web browser (client-side) using standard browser APIs. Your microphone audio is NOT sent to or stored on any external servers."
+        }
+      },{
+        "@type": "Question",
+        "name": "Why isn't my mic test working?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Common reasons include: 1. Microphone permission was denied (check browser settings). 2. No microphone is connected or selected. 3. The wrong microphone is selected. 4. Browser doesn't support necessary APIs (try updating or using Chrome/Firefox/Edge/Safari). 5. Microphone muted in system settings."
+        }
+      },{
+        "@type": "Question",
+        "name": "Do I need to install anything?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, this is a completely browser-based tool. There's nothing to download or install. It works directly on the webpage."
+        }
+      }]
+    }
+    </script>
+
+</head>
+<body>
+    <div id="app">
+        <header class="header">
+            <h1 data-i18n="appTitle">Mic Analyzer</h1>
+            <div class="controls-right">
+                 <select id="langSelect" title="Select Language"></select>
+                 <button id="themeToggleButton" data-i18n="toggleThemeBtn" data-i18n-attr="title" title="Switch Theme"></button>
+            </div>
+        </header>
+
+        <div id="resultsBar">
+             <div class="result-item"><span data-i18n="resultsVolumeLabel">Volume</span>: <strong id="resultsVolume">--%</strong></div>
+             <div class="result-item"><span data-i18n="resultsSampleRateLabel">Sample Rate</span>: <strong id="resultsSampleRate">---- Hz</strong></div>
+             <!-- Add more results here later -->
+        </div>
+
+        <section class="section" id="setupSection">
+            <h2 data-i18n="setupTitle">1. Setup & Controls</h2>
+            <div class="controls">
+                <label for="micSelect" data-i18n="micSelectLabel">Select Microphone:</label>
+                <select id="micSelect" disabled data-i18n="micSelectDefaultOption" data-i18n-attr="title" title="Available microphones will appear here">
+                    <option value="" data-i18n="micSelectLoading">Loading devices...</option>
+                </select>
+                <button id="startStopButton" data-i18n="startTestingBtn" data-i18n-attr="title" title="Start or stop the microphone test">Start Testing</button>
+                <button id="recordButton" disabled data-i18n="recordSampleBtn" data-i18n-attr="title" title="Record a short audio sample for playback">Record Sample</button>
+            </div>
+             <p id="status" data-i18n="statusInitializing">Initializing...</p>
+             <p class="privacy-note" data-i18n="privacyNotice">Your audio is processed locally in your browser and is never sent to our servers.</p>
+        </section>
+
+        <section class="section" id="analysisSection" style="display: none;">
+             <h2 data-i18n="analysisTitle">2. Real-time Analysis</h2>
+             <label for="volumeMeterContainer" data-i18n="liveVolumeLabel">Live Volume Level:</label>
+             <div id="volumeMeterContainer" data-i18n="liveVolumeTitle" data-i18n-attr="title" title="Current input volume">
+                 <div id="volumeMeter"></div>
+             </div>
+
+             <h3 data-i18n="waveformTitle">Waveform</h3>
+             <canvas id="waveformCanvas" data-i18n="waveformTitleAttr" data-i18n-attr="title" title="Visual representation of the audio signal over time"></canvas>
+
+             <h3 data-i18n="frequencyTitle">Frequency Spectrum</h3>
+             <canvas id="frequencyCanvas" data-i18n="frequencyTitleAttr" data-i18n-attr="title" title="Distribution of audio frequencies (low to high)"></canvas>
+        </section>
+
+         <section class="section" id="recordingSection" style="display: none;">
+              <h2 data-i18n="recordingTitle">3. Recording & Playback</h2>
+              <p id="recordingStatus" data-i18n="recordingStatusDefault">No recording yet.</p>
+              <audio id="audioPlayback" controls data-i18n="playbackTitle" data-i18n-attr="title" title="Playback your recorded audio sample"></audio>
+         </section>
+
+         <section class="section faq-section">
+             <h2 data-i18n="faqTitle">Frequently Asked Questions (FAQ)</h2>
+             <details>
+                 <summary data-i18n="faq1Question">How do I use this microphone test?</summary>
+                 <p data-i18n="faq1Answer">1. Grant microphone permission when prompted. 2. Select your mic. 3. Click 'Start Testing'. 4. Watch the visuals. 5. Optionally, record/playback.</p>
+             </details>
+             <details>
+                 <summary data-i18n="faq2Question">Is this mic test safe and private?</summary>
+                 <p data-i18n="faq2Answer">Yes. All audio processing is done locally in your browser. Your audio never leaves your computer and is not stored anywhere.</p>
+             </details>
+              <details>
+                 <summary data-i18n="faq3Question">Why isn't my mic test working?</summary>
+                 <p data-i18n="faq3Answer">Check: 1. Mic permissions in browser settings. 2. Correct mic selected. 3. Mic isn't muted in system settings. 4. Try updating your browser (Chrome, Firefox, Edge, Safari recommended).</p>
+             </details>
+             <details>
+                 <summary data-i18n="faq4Question">Do I need to install anything?</summary>
+                 <p data-i18n="faq4Answer">No, this tool runs entirely online in your web browser. No installation needed.</p>
+             </details>
+              <details>
+                 <summary data-i18n="faq5Question">What do the visualizations mean?</summary>
+                 <p data-i18n="faq5Answer">The Volume Meter shows loudness. The Waveform shows the sound wave shape over time. The Frequency Spectrum shows the intensity of different pitches (low sounds on the left, high sounds on the right).</p>
+             </details>
+         </section>
+
+    </div>
+
+    <footer>
+        <p>Mic Analyzer by <a href="https://github.com/GlobalUtils" target="_blank" rel="noopener">GlobalUtils</a>. <span data-i18n="footerPrivacy">Privacy-focused testing.</span></p>
+    </footer>
+
+    <!-- Main Script (Module) -->
+    <script src="../js/main.js" type="module" defer></script> <!-- Path Adjusted -->
+</body>
+</html>
